@@ -1,0 +1,28 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "A difference calculator is a cli program that determines the difference between two data structures.",
+  "main": "gendiff.js",
+  "type": "module",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mxrstv/frontend-project-46.git"
+  },
+  "author": "Max Erastov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mxrstv/frontend-project-46/issues"
+  },
+  "homepage": "https://github.com/mxrstv/frontend-project-46#readme",
+  "dependencies": {
+    "commander": "^10.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
+  }
+}
