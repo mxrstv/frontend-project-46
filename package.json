@@ -2,8 +2,11 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "A difference calculator is a cli program that determines the difference between two data structures.",
-  "main": "gendiff.js",
+  "main": "./gendiff.js",
   "type": "module",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
   "scripts": {
     "test": "npx jest"
   },
