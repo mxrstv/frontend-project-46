@@ -21,7 +21,7 @@ const compareObjects = (filepath1, filepath2, format) => {
   console.log(keys);
   const lines = [];
   keys.forEach((key) => {
-    console.log(`${key} first: ${first[key]} second: ${first[key]} `);
+    // console.log(`${key} first: ${first[key]} second: ${first[key]} `);
     if (Object.hasOwn(first, key) && Object.hasOwn(second, key)) {
       if (first[key] === second[key]) {
         lines.push(`  ${key}: ${first[key]}`);
@@ -37,7 +37,7 @@ const compareObjects = (filepath1, filepath2, format) => {
       lines.push(`+ ${key}: ${second[key]}`);
     }
   });
-  console.log(lines);
+  console.log(['{', ...lines.map((line) => `  ${line}`), '}'].join('\n'));
 };
 
 program
