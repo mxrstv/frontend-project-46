@@ -1,22 +1,13 @@
-import path from 'node:path';
-import * as fs from 'node:fs';
-
-const normalizePath = (str) => {
-  const cwd = process.cwd();
-  return path.isAbsolute(str) ? str : path.resolve(cwd, str);
-};
+import parseObj from './parsers.js';
 
 const gendiff = (filepath1, filepath2, format) => {
   const [first, second] = [filepath1, filepath2]
-    .map((str) => normalizePath(str))
-    .map((filePath) => fs.readFileSync(filePath, { encoding: 'utf8' }))
-    .map((strObj) => JSON.parse(strObj));
+    .map((file) => parseObj(file));
   const keys = [first, second]
     .flatMap((obj) => Object.keys(obj))
     .filter((item, index, items) => items.indexOf(item) === index)
     .sort();
-  // console.log(first, second);
-  console.log(keys);
+  // console.log(keys);
   const lines = [];
   keys.forEach((key) => {
     // console.log(`${key} first: ${first[key]} second: ${first[key]} `);
