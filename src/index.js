@@ -9,35 +9,30 @@ const normalizePath = (str) => {
 };
 
 const gendiff = (filepath1, filepath2, format) => {
-  // const ext = path.extname(filepath);
-  // const normalized = normalizePath(filepath);
-  // const strObj = fs.readFileSync(normalized, { encoding: 'utf8' });
-  const [first, second] = [filepath1, filepath2]
+  const [firstObject, secondObject] = [filepath1, filepath2]
     .map((filepath) => normalizePath(filepath))
     .map((normPath) => [fs.readFileSync(normPath, { encoding: 'utf8' }), path.extname(normPath)])
     .map(([strObj, ext]) => parseObj(strObj, ext));
-  console.log(first, second);
-  const keys = _.sortBy(_.union(_.keys(first), _.keys(second)));
-  console.log(keys);
-  const lines = [];
-  keys.forEach((key) => {
-    // console.log(`${key} first: ${first[key]} second: ${first[key]} `);
-    if (Object.hasOwn(first, key) && Object.hasOwn(second, key)) {
-      if (first[key] === second[key]) {
-        lines.push(`  ${key}: ${first[key]}`);
-      } else {
-        lines.push(`- ${key}: ${first[key]}`);
-        lines.push(`+ ${key}: ${second[key]}`);
+  // console.log(firstObject, secondObject);
+  const buildDiffTree = (first, second) => {
+    const keys = _.sortBy(_.union(_.keys(first), _.keys(second)));
+    const diffTree = keys.map((key) => {
+      if (_.has(first, key) && !_.has(second, key)) {
+        return { node: [key], state: 'deleted', value: first[key] };
       }
-    }
-    if (Object.hasOwn(first, key) && !Object.hasOwn(second, key)) {
-      lines.push(`- ${key}: ${first[key]}`);
-    }
-    if (!Object.hasOwn(first, key) && Object.hasOwn(second, key)) {
-      lines.push(`+ ${key}: ${second[key]}`);
-    }
-  });
-  return ['{', ...lines.map((line) => `  ${line}`), '}'].join('\n');
+      if (!_.has(first, key) && _.has(second, key)) {
+        return { node: [key], state: 'added', value: second[key] };
+      }
+      if (_.isObject(first[key]) && _.isObject(second[key])) {
+        return { node: [key], state: 'nested', value: buildDiffTree(first[key], second[key]) };
+      }
+      return (first[key] === second[key])
+        ? { node: [key], state: 'unchanged', value: first[key] }
+        : { node: [key], state: 'changed', value: second[key], ldValue: first[key] };
+    });
+    return diffTree;
+  };
+  console.log(buildDiffTree(firstObject, secondObject));
 };
 
 export default gendiff;
