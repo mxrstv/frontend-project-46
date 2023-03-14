@@ -38,3 +38,11 @@ test('yaml plain', () => {
   const actual = gendiff(first, second, 'plain');
   expect(actual).toEqual(expected);
 });
+
+test('json', () => {
+  const first = getFixturePath('file1.json');
+  const second = getFixturePath('file2.json');
+  const expected = fs.readFileSync(getFixturePath('expected_json.txt'), 'utf-8');
+  const actual = gendiff(first, second, 'json');
+  expect(actual).toEqual(expected);
+});
