@@ -11,7 +11,7 @@ const formatDiff = (diffTree, format) => {
     case 'json':
       return json(diffTree);
     default:
-      return `Format: ${format} not supported`;
+      throw new Error(`Format: ${format} not supported`);
   }
 };
 

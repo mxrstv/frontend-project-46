@@ -23,7 +23,7 @@ const plain = (diffTree) => {
           case 'deleted':
             return `Property '${path}${name}' was removed`;
           default:
-            return `Unexpected state: ${state}`;
+            throw new Error(`Unexpected state: ${state}`);
         }
       });
     return [...lines].join('\n');
