@@ -29,7 +29,7 @@ const stylish = (diffTree) => {
       const currentTab = changeTabByState(state, levelTab);
       switch (state) {
         case 'nested':
-          return `${currentTab}${name}: ${iter(value, level + 1)}`;
+          return `${currentTab}${name}: ${iter(diffKey.children, level + 1)}`;
         case 'changed': {
           const newValueTab = changeTabByState('added', currentTab);
           const oldValueTab = changeTabByState('deleted', currentTab);

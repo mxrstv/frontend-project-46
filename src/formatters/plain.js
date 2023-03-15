@@ -15,7 +15,7 @@ const plain = (diffTree) => {
         const { name, state, value } = diffKey;
         switch (state) {
           case 'nested':
-            return iter(value, `${path}${name}.`);
+            return iter(diffKey.children, `${path}${name}.`);
           case 'changed':
             return `Property '${path}${name}' was updated. From ${formatValue(diffKey.oldValue, path)} to ${formatValue(value, path)}`;
           case 'added':
