@@ -12,16 +12,16 @@ const plain = (diffTree) => {
     const lines = node
       .filter((item) => item.state !== 'unchanged')
       .map((diffKey) => {
-        const { name, state, value } = diffKey;
+        const { key, state, value } = diffKey;
         switch (state) {
           case 'nested':
-            return iter(diffKey.children, `${path}${name}.`);
+            return iter(diffKey.children, `${path}${key}.`);
           case 'changed':
-            return `Property '${path}${name}' was updated. From ${formatValue(diffKey.oldValue, path)} to ${formatValue(value, path)}`;
+            return `Property '${path}${key}' was updated. From ${formatValue(diffKey.oldValue, path)} to ${formatValue(value, path)}`;
           case 'added':
-            return `Property '${path}${name}' was added with value: ${formatValue(value, path)}`;
+            return `Property '${path}${key}' was added with value: ${formatValue(value, path)}`;
           case 'deleted':
-            return `Property '${path}${name}' was removed`;
+            return `Property '${path}${key}' was removed`;
           default:
             throw new Error(`Unexpected state: ${state}`);
         }

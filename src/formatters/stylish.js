@@ -25,18 +25,18 @@ const stylish = (diffTree) => {
     const levelTab = calcTab(level);
     const bracketTab = calcTab(level - 1);
     const lines = node.map((diffKey) => {
-      const { state, name, value } = diffKey;
+      const { state, key, value } = diffKey;
       const currentTab = changeTabByState(state, levelTab);
       switch (state) {
         case 'nested':
-          return `${currentTab}${name}: ${iter(diffKey.children, level + 1)}`;
+          return `${currentTab}${key}: ${iter(diffKey.children, level + 1)}`;
         case 'changed': {
           const newValueTab = changeTabByState('added', currentTab);
           const oldValueTab = changeTabByState('deleted', currentTab);
-          return `${oldValueTab}${name}: ${formatValue(diffKey.oldValue, level)}\n${newValueTab}${name}: ${formatValue(value, level)}`;
+          return `${oldValueTab}${key}: ${formatValue(diffKey.oldValue, level)}\n${newValueTab}${key}: ${formatValue(value, level)}`;
         }
         default:
-          return `${currentTab}${name}: ${formatValue(value, level)}`;
+          return `${currentTab}${key}: ${formatValue(value, level)}`;
       }
     });
     return ['{', ...lines, `${bracketTab}}`].join('\n');
