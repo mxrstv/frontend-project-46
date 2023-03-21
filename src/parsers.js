@@ -1,12 +1,10 @@
 import yaml from 'js-yaml';
 
-const parseObj = (strObj, ext) => {
-  const formats = {
-    '.json': (format) => JSON.parse(format),
-    '.yml': (format) => yaml.load(format),
-    '.yaml': (format) => yaml.load(format),
-  };
-  return formats[ext]?.(strObj) ?? `Format: ${ext} not supported`;
+const formats = {
+  '.json': JSON.parse,
+  '.yml': yaml.load,
+  '.yaml': yaml.load,
 };
+//  return formats[ext]?.(strObj) ?? `Format: ${ext} not supported`;
 
-export default parseObj;
+export default (strObj, ext) => formats[ext](strObj);
