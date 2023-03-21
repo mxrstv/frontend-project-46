@@ -2,17 +2,15 @@ import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
 
-const formatDiff = (diffTree, format) => {
-  switch (format) {
-    case 'stylish':
-      return stylish(diffTree);
-    case 'plain':
-      return plain(diffTree);
-    case 'json':
-      return json(diffTree);
-    default:
-      throw new Error(`Format: ${format} not supported`);
-  }
+const formatters = {
+  stylish,
+  plain,
+  json,
 };
 
-export default formatDiff;
+export default (diffTree, format) => {
+  if (!formatters[format]) {
+    throw new Error(`Format: ${format} not supported`);
+  }
+  return formatters[format](diffTree);
+};
